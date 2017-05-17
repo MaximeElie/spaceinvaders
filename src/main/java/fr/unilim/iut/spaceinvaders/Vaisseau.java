@@ -18,11 +18,11 @@ public class Vaisseau {
 		this.x = this.x + 1;
 	}
 
-	public int abscisse() {
-		return this.x;
-	}
-
 	public void seDeplacerVersLaGauche() {
 		this.x = this.x - 1;
+	}
+	
+	public int abscisse() {
+		return this.x;
 	}
 }
