@@ -8,19 +8,19 @@ public class SpaceInvaders {
 	private static final char MARQUE_FIN_LIGNE = '\n';
 	private static final char MARQUE_VIDE = '.';
 	private static final char MARQUE_VAISSEAU = 'V';
-	int largeur;
+	int longueur;
 	int hauteur;
 	Vaisseau vaisseau;
 
 	public SpaceInvaders(int longueur, int hauteur) {
-		this.largeur = longueur;
+		this.longueur = longueur;
 		this.hauteur = hauteur;
 	}
 
 	public String recupererEspaceJeuDansChaineASCII() {
 		StringBuilder espaceDeJeu = new StringBuilder();
 		for (int y = 0; y < hauteur; y++) {
-			for (int x = 0; x < largeur; x++) {
+			for (int x = 0; x < longueur; x++) {
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
 			}
 			espaceDeJeu.append(MARQUE_FIN_LIGNE);
@@ -29,7 +29,7 @@ public class SpaceInvaders {
 	}
 
 	public void deplacerVaisseauVersLaDroite() {
-		if (vaisseau.abscisseLaPlusAGauche() < (largeur - 1))
+		if (vaisseau.abscisseLaPlusADroite() < (longueur - 1))
 			vaisseau.seDeplacerVersLaDroite();
 	}
 
@@ -39,7 +39,7 @@ public class SpaceInvaders {
 	}
 
 	private boolean estDansEspaceJeu(int x, int y) {
-		return ((x >= 0) && (x < largeur)) && ((y >= 0) && (y < hauteur));
+		return ((x >= 0) && (x < longueur)) && ((y >= 0) && (y < hauteur));
 	}
 
 	private boolean aUnVaisseau() {
@@ -59,16 +59,24 @@ public class SpaceInvaders {
 		return marque;
 	}
 
-	public void positionnerUnNouveauVaisseau(int longueur, int hauteur, int x, int y) {
+	public void positionnerUnNouveauVaisseau(Dimension dimension, Position position) {
+		int x = position.abscisse();
+		int y = position.ordonnee();
+
 		if (!estDansEspaceJeu(x, y))
 			throw new HorsEspaceJeuException("La position du vaisseau est en dehors de l'espace jeu");
 
-		if ( !estDansEspaceJeu(x+longueur-1,y))
-			throw new DebordementEspaceJeuException("Le vaisseau déborde de l'espace jeu vers la droite à cause de sa longueur");
-		if (!estDansEspaceJeu(x,y-hauteur+1))
-			throw new DebordementEspaceJeuException("Le vaisseau déborde de l'espace jeu vers le bas à cause de sa hauteur");
+		int longueurVaisseau = dimension.longueur();
+		int hauteurVaisseau = dimension.hauteur();
 
-		vaisseau = new Vaisseau(longueur, hauteur);
+		if (!estDansEspaceJeu(x + longueurVaisseau - 1, y))
+			throw new DebordementEspaceJeuException(
+					"Le vaisseau déborde de l'espace jeu vers la droite à cause de sa longueur");
+		if (!estDansEspaceJeu(x, y - hauteurVaisseau + 1))
+			throw new DebordementEspaceJeuException(
+					"Le vaisseau déborde de l'espace jeu vers le bas à cause de sa hauteur");
+
+		vaisseau = new Vaisseau(longueurVaisseau, hauteurVaisseau);
 		vaisseau.positionner(x, y);
 	}
 }
