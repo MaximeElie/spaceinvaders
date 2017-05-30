@@ -30,11 +30,11 @@ public class Vaisseau {
 		return (abscisseLaPlusAGauche() <= x) && (x <= abscisseLaPlusADroite());
 	}
 
-	private int ordonneeLaPlusBasse() {
+	public int ordonneeLaPlusBasse() {
 		return this.origine.ordonnee() - this.dimension.hauteur() + 1;
 	}
 
-	private int ordonneeLaPlusHaute() {
+	public int ordonneeLaPlusHaute() {
 		return this.origine.ordonnee();
 	}
 
@@ -48,14 +48,24 @@ public class Vaisseau {
 
 	public void seDeplacerVersLaDroite() {
 		this.origine.changerAbscisse(this.origine.abscisse() + 1);
+
 	}
 
 	public void seDeplacerVersLaGauche() {
 		this.origine.changerAbscisse(this.origine.abscisse() - 1);
+
 	}
 
 	public void positionner(int x, int y) {
 		this.origine.changerAbscisse(x);
 		this.origine.changerOrdonnee(y);
+	}
+
+	public int hauteur() {
+		return this.dimension.hauteur();
+	}
+
+	public int longueur() {
+		return this.dimension.longueur();
 	}
 }
