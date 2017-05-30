@@ -7,9 +7,6 @@ import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
 
 public class SpaceInvaders implements Jeu {
 
-	private static final char MARQUE_FIN_LIGNE = '\n';
-	private static final char MARQUE_VIDE = '.';
-	private static final char MARQUE_VAISSEAU = 'V';
 	int longueur;
 	int hauteur;
 	Vaisseau vaisseau;
@@ -31,7 +28,7 @@ public class SpaceInvaders implements Jeu {
 			for (int x = 0; x < longueur; x++) {
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
 			}
-			espaceDeJeu.append(MARQUE_FIN_LIGNE);
+			espaceDeJeu.append(Constante.MARQUE_FIN_LIGNE);
 		}
 		return espaceDeJeu.toString();
 	}
@@ -39,9 +36,9 @@ public class SpaceInvaders implements Jeu {
 	private char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
 		if (this.aUnVaisseauQuiOccupeLaPosition(x, y))
-			marque = MARQUE_VAISSEAU;
+			marque = Constante.MARQUE_VAISSEAU;
 		else
-			marque = MARQUE_VIDE;
+			marque = Constante.MARQUE_VIDE;
 		return marque;
 	}
 
