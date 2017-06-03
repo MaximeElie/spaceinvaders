@@ -18,7 +18,7 @@ public abstract class Sprite {
 	}
 
 	private boolean estOrdonneeCouverte(int y) {
-		return (ordonneeLaPlusBasse() <= y) && (y <= ordonneeLaPlusHaute());
+		return (ordonneeLaPlusBasse() >= y) && (y >= ordonneeLaPlusHaute());
 	}
 
 	private boolean estAbscisseCouverte(int x) {
@@ -26,11 +26,11 @@ public abstract class Sprite {
 	}
 
 	public int ordonneeLaPlusBasse() {
-		return this.origine.ordonnee() - this.dimension.hauteur() + 1;
+		return this.origine.ordonnee();
 	}
 
 	public int ordonneeLaPlusHaute() {
-		return this.origine.ordonnee();
+		return this.origine.ordonnee() - this.dimension.hauteur() + 1;
 	}
 
 	public int abscisseLaPlusADroite() {
@@ -41,12 +41,12 @@ public abstract class Sprite {
 		return this.origine.abscisse();
 	}
 
-	public void seDeplacerVersLaDroite() {
-		this.origine.changerAbscisse(this.origine.abscisse() + vitesse);
+	public void deplacerHorizontalementVers(Direction direction) {
+		this.origine.changerAbscisse(this.origine.abscisse() + direction.valeur()*vitesse);
 	}
-
-	public void seDeplacerVersLaGauche() {
-		this.origine.changerAbscisse(this.origine.abscisse() - vitesse);
+	
+	public void deplacerVerticalementVers(Direction direction) {
+		this.origine.changerOrdonnee(this.origine.ordonnee() + direction.valeur()*vitesse);
 	}
 
 	public void positionner(int x, int y) {

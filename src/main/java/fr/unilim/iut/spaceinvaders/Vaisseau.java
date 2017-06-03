@@ -20,7 +20,7 @@ public class Vaisseau extends Sprite {
 		int abscisseMilieuVaisseau = this.abscisseLaPlusAGauche() + (this.longueur() / 2);
 		int abscisseOrigineMissile = abscisseMilieuVaisseau - (dimensionMissile.longueur() / 2);
 
-		int ordonneeeOrigineMissile = this.ordonneeLaPlusBasse() - 1;
+		int ordonneeeOrigineMissile = this.ordonneeLaPlusHaute() - 1;
 		
 		return new Position(abscisseOrigineMissile, ordonneeeOrigineMissile);		
 	}

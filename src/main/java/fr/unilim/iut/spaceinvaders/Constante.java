@@ -7,7 +7,7 @@ public class Constante {
 	
 	   public static final int VAISSEAU_LONGUEUR = 100;
 	   public static final int VAISSEAU_HAUTEUR = 80;
-	   public static final int VAISSEAU_VITESSE = 10;
+	   public static final int VAISSEAU_VITESSE = 5;
 	   
 	   public static final int MISSILE_LONGUEUR = 20;
 	   public static final int MISSILE_HAUTEUR = 80;
