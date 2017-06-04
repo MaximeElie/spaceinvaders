@@ -13,6 +13,11 @@ public class SpaceInvaders implements Jeu {
 	private Vaisseau vaisseau;
 	private Missile missile;
 	private Envahisseur envahisseur;
+	private boolean finPartie;
+
+	public boolean isFinPartie() {
+		return finPartie;
+	}
 
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
@@ -27,6 +32,8 @@ public class SpaceInvaders implements Jeu {
 		positionnerUnNouvelEnvahisseur(	new Dimension(Constante.ENVAHISSEUR_LONGUEUR, Constante.ENVAHISSEUR_HAUTEUR),
 										new Position(this.longueur / 2, Constante.ENVAHISSEUR_HAUTEUR*2),
 										Constante.ENVAHISSEUR_VITESSE);
+		
+		finPartie = false;
 	}
 
 	public String recupererEspaceJeuDansChaineASCII() {
@@ -143,8 +150,13 @@ public class SpaceInvaders implements Jeu {
 			deplacerMissile();
 		}
 		
-		deplacerEnvahisseur();
+		if(this.aUnEnvahisseur()) {
+			deplacerEnvahisseur();
+		}
+	}
 
+	private void finPartie() {
+		finPartie = true;
 	}
 
 	public boolean etreFini() {
@@ -169,6 +181,11 @@ public class SpaceInvaders implements Jeu {
 			return;
 		
 		missile.deplacerVerticalementVers(Direction.HAUT_ECRAN);
+		
+		if(this.aUnEnvahisseur()) {
+			if(Collision.detecterCollision(envahisseur, missile))
+				finPartie();
+		}
 		
 		if(!estDansEspaceJeu(missile.abscisseLaPlusAGauche(), missile.ordonneeLaPlusHaute()))
 			missile = null;
@@ -199,6 +216,9 @@ public class SpaceInvaders implements Jeu {
 	}
 
 	public void deplacerEnvahisseur() {
+		
+		if(!this.aUnEnvahisseur())
+			return;
 		
 		if(envahisseur.abscisseLaPlusAGauche() == 0 || envahisseur.abscisseLaPlusADroite() == (this.longueur - 1))
 			envahisseur.inverserDirection();

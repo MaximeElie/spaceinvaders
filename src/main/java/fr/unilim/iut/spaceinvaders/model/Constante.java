@@ -9,8 +9,8 @@ public class Constante {
 	   public static final int VAISSEAU_HAUTEUR = 80;
 	   public static final int VAISSEAU_VITESSE = 5;
 	   
-	   public static final int MISSILE_LONGUEUR = 20;
-	   public static final int MISSILE_HAUTEUR = 80;
+	   public static final int MISSILE_LONGUEUR = 10;
+	   public static final int MISSILE_HAUTEUR = 50;
 	   public static final int MISSILE_VITESSE = 20;
 	   
 	   public static final int ENVAHISSEUR_LONGUEUR = 60;

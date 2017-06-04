@@ -356,4 +356,19 @@ public class SpaceInvadersTest {
     			"...............\n" + 
     			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
     }
+    
+    @Test
+    public void test_PartieFinieQuandMissileToucheEnvahisseur() {
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 0);
+    	spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
+    	
+    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	spaceinvaders.deplacerMissile();
+    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	spaceinvaders.deplacerMissile();
+
+    	if(!spaceinvaders.isFinPartie())
+    		fail("La partie devrait être terminée lors de la collision entre le missile et l'envahisseur");
+    }
 }
