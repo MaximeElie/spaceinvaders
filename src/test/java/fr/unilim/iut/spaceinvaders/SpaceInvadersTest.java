@@ -261,7 +261,7 @@ public class SpaceInvadersTest {
 	   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
 	   spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
 
-	   spaceinvaders.deplacerMissile();
+	   spaceinvaders.deplacerMissiles();
 	   
        assertEquals("" + 
        "...............\n" + 
@@ -282,10 +282,10 @@ public class SpaceInvadersTest {
  	   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
  	   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
  	   for (int i = 1; i <=6 ; i++) {
- 		   spaceinvaders.deplacerMissile();
+ 		   spaceinvaders.deplacerMissiles();
  	   }
  	   
- 	  spaceinvaders.deplacerMissile();
+ 	  spaceinvaders.deplacerMissiles();
  	   
         assertEquals("" +
         "...............\n" + 
@@ -363,12 +363,53 @@ public class SpaceInvadersTest {
     	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 0);
     	spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
     	
-    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
-    	spaceinvaders.deplacerMissile();
-    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
-    	spaceinvaders.deplacerMissile();
+    	spaceinvaders.deplacerMissiles();
+    	spaceinvaders.deplacerMissiles();
 
     	if(!spaceinvaders.isFinPartie())
     		fail("La partie devrait être terminée lors de la collision entre le missile et l'envahisseur");
+    }
+    
+    @Test
+    public void test_plusieursMissilesPossibles() {
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	
+    	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 3);
+    	spaceinvaders.deplacerMissiles();
+    	
+    	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 3);
+    	
+    	assertEquals("" + 
+    			"...............\n" + 
+    			"...............\n" +
+    			"...............\n" + 
+    			".M.............\n" + 
+    			".M.............\n" + 
+    			"...............\n" + 
+    			".M.............\n" + 
+    			".M.............\n" + 
+    			"VVV............\n" + 
+    			"VVV............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    }
+    
+    @Test
+    public void test_LesMissilesNePeuventPasSeSuperposer() {
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 1);
+    	spaceinvaders.deplacerMissiles();
+    	
+    	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 1);
+    	
+    	assertEquals("" + 
+    			"...............\n" + 
+    			"...............\n" +
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			".M.............\n" + 
+    			".M.............\n" + 
+    			"...............\n" + 
+    			"VVV............\n" + 
+    			"VVV............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
     }
 }

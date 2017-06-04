@@ -26,8 +26,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 			this.dessinerUnVaisseau(vaisseau, im);
 		}
 		
-		if (this.jeu.aUnMissile()) {
-			Missile missile = this.jeu.recupererMissile();
+		for(Missile missile : jeu.recupererMissiles()) {
 			this.dessinerUnMissile(missile, im);
 		}
 		
