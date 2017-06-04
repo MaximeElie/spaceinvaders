@@ -19,4 +19,8 @@ public class Envahisseur extends Sprite {
 		else if(direction == Direction.GAUCHE)
 			direction = Direction.DROITE;
 	}
+	
+	public Direction getDirection() {
+		return direction;
+	}
 }

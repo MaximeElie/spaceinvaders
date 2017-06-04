@@ -322,7 +322,7 @@ public class SpaceInvadersTest {
     	
     	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 2);
     	
-    	spaceinvaders.deplacerEnvahisseur();
+    	spaceinvaders.deplacerEnvahisseurs();
     	
     	assertEquals("" + 
     			".........EEE...\n" + 
@@ -341,8 +341,8 @@ public class SpaceInvadersTest {
     public void test_EnvahisseurChangeDeDirectionAuBordDeEspaceDeJeu() {
     	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(11,2), 2);
     	
-    	spaceinvaders.deplacerEnvahisseur();
-    	spaceinvaders.deplacerEnvahisseur();
+    	spaceinvaders.deplacerEnvahisseurs();
+    	spaceinvaders.deplacerEnvahisseurs();
     	
     	assertEquals("" + 
     			"..........EEE..\n" + 
@@ -357,18 +357,24 @@ public class SpaceInvadersTest {
     			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
     }
     
-    @Test
-    public void test_PartieFinieQuandMissileToucheEnvahisseur() {
-    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 0);
-    	spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
-    	
-    	spaceinvaders.deplacerMissiles();
-    	spaceinvaders.deplacerMissiles();
-
-    	if(!spaceinvaders.isFinPartie())
-    		fail("La partie devrait être terminée lors de la collision entre le missile et l'envahisseur");
-    }
+    /*
+     * 
+     * Ce test était utilisé lorsque nous n'avions qu'un envahisseur
+		
+	    @Test
+	    public void test_PartieFinieQuandMissileToucheEnvahisseur() {
+	    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
+	    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 0);
+	    	spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
+	    	
+	    	spaceinvaders.deplacerMissiles();
+	    	spaceinvaders.deplacerMissiles();
+	
+	    	if(!spaceinvaders.isFinPartie())
+	    		fail("La partie devrait être terminée lors de la collision entre le missile et l'envahisseur");
+	    }
+	    
+    */
     
     @Test
     public void test_plusieursMissilesPossibles() {
@@ -411,5 +417,46 @@ public class SpaceInvadersTest {
     			"...............\n" + 
     			"VVV............\n" + 
     			"VVV............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    }
+    
+    @Test
+    public void test_LaLigneEnvahisseursSeDeplaceCorrectement() {
+    	for(int i = 0 ; i < 3 ; i++) {
+    		spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(i*4,1), 2);
+    	}
+    	
+    	spaceinvaders.deplacerEnvahisseurs();
+    	spaceinvaders.deplacerEnvahisseurs();
+    	
+    	assertEquals("" + 
+    			"....EEE.EEE.EEE\n" + 
+    			"....EEE.EEE.EEE\n" +
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	
+    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	
+    	spaceinvaders.deplacerEnvahisseurs();
+    	
+    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	
+    	assertEquals("" + 
+    			"..EEE.EEE.EEE..\n" + 
+    			"..EEE.EEE.EEE..\n" +
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    	
     }
 }

@@ -30,8 +30,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 			this.dessinerUnMissile(missile, im);
 		}
 		
-		if(this.jeu.aUnEnvahisseur()) {
-			Envahisseur envahisseur = this.jeu.recupererEnvahisseur();
+		for(Envahisseur envahisseur : jeu.recupererEnvahisseurs()) {
 			this.dessinerUnEnvahisseur(envahisseur, im);
 		}
 	}
@@ -41,7 +40,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 
 		crayon.setColor(Color.black);
 		crayon.setFont(new Font("Verdana", Font.BOLD, 50));
-		crayon.drawString("FIN DE LA PARTIE", 0, Constante.ESPACEJEU_HAUTEUR/2);
+		crayon.drawString("FIN DE LA PARTIE", 250, Constante.ESPACEJEU_HAUTEUR/2);
 	}
 
 	private void dessinerUnMissile(Missile missile, BufferedImage im) {
