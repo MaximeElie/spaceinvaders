@@ -440,11 +440,8 @@ public class SpaceInvadersTest {
     			"...............\n" + 
     			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
     	
-    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
     	
     	spaceinvaders.deplacerEnvahisseurs();
-    	
-    	System.out.println(spaceinvaders.recupererEspaceJeuDansChaineASCII());
     	
     	assertEquals("" + 
     			"..EEE.EEE.EEE..\n" + 
@@ -458,5 +455,20 @@ public class SpaceInvadersTest {
     			"...............\n" + 
     			"...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
     	
+    }
+    
+    @Test
+    public void test_DetruireUnEnvahisseurAugmenteLeScore() {
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	
+    	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 2);
+    	
+    	spaceinvaders.deplacerMissiles();
+    	spaceinvaders.deplacerMissiles();
+    	spaceinvaders.deplacerMissiles();
+    	
+    	if(spaceinvaders.getScore() != 1)
+    		fail("Le score devrait être égale a 1 si on détruit un envahisseur");
     }
 }

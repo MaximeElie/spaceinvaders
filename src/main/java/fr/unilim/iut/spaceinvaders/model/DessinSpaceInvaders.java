@@ -18,6 +18,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 	public void dessiner(BufferedImage im) {
 		if(jeu.isFinPartie()) {
 			this.dessinerMessageFinPartie(im);
+			this.dessinerScore(im);
 			return;
 		}
 		
@@ -33,6 +34,16 @@ public class DessinSpaceInvaders implements DessinJeu {
 		for(Envahisseur envahisseur : jeu.recupererEnvahisseurs()) {
 			this.dessinerUnEnvahisseur(envahisseur, im);
 		}
+		
+		this.dessinerScore(im);
+	}
+
+	private void dessinerScore(BufferedImage im) {
+		Graphics2D crayon = (Graphics2D) im.getGraphics();
+
+		crayon.setColor(Color.black);
+		crayon.setFont(new Font("Verdana", Font.BOLD, 30));
+		crayon.drawString("Score : " + jeu.getScore(), Constante.ESPACEJEU_LONGUEUR, Constante.ESPACEJEU_HAUTEUR/2);		
 	}
 
 	private void dessinerMessageFinPartie(BufferedImage im) {
@@ -40,7 +51,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 
 		crayon.setColor(Color.black);
 		crayon.setFont(new Font("Verdana", Font.BOLD, 50));
-		crayon.drawString("FIN DE LA PARTIE", 250, Constante.ESPACEJEU_HAUTEUR/2);
+		crayon.drawString("FIN DE LA PARTIE", 50, Constante.ESPACEJEU_HAUTEUR/2);
 	}
 
 	private void dessinerUnMissile(Missile missile, BufferedImage im) {

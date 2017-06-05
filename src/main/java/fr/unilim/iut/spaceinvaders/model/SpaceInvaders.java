@@ -17,6 +17,7 @@ public class SpaceInvaders implements Jeu {
 	private List<Missile> missiles;
 	private List<Envahisseur> envahisseurs;
 	private boolean finPartie;
+	private int score;
 
 	public boolean isFinPartie() {
 		return finPartie;
@@ -25,8 +26,9 @@ public class SpaceInvaders implements Jeu {
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
 		this.hauteur = hauteur;
-		missiles = new ArrayList<Missile>();
-		envahisseurs = new ArrayList<Envahisseur>();
+		this.missiles = new ArrayList<Missile>();
+		this.envahisseurs = new ArrayList<Envahisseur>();
+		this.score = 0;
 	}
 
 	public void initialiserJeu() {
@@ -210,8 +212,10 @@ public class SpaceInvaders implements Jeu {
 			missiles.get(i).deplacerVerticalementVers(Direction.HAUT_ECRAN);
 			
 			for(int j = 0 ; j < envahisseurs.size() ; j++) {
-				if(Collision.detecterCollision(envahisseurs.get(j), missiles.get(i)))
+				if(Collision.detecterCollision(envahisseurs.get(j), missiles.get(i))) {
 					envahisseurs.remove(j);
+					score++;
+				}
 			}
 			
 			if(envahisseurs.size() == 0) {
@@ -271,6 +275,10 @@ public class SpaceInvaders implements Jeu {
 				envahisseurs.get(i).positionner(longueur - envahisseurs.get(i).longueur(), envahisseurs.get(i).ordonneeLaPlusBasse());
 			}
 		}
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 }
