@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
  * 
  */
 public class Controleur implements KeyListener {
+	
+	private boolean dejaTire;
 
 	/**
 	 * commande en cours
@@ -27,6 +29,7 @@ public class Controleur implements KeyListener {
 	public Controleur() {
 		this.commandeEnCours = new Commande();
 		this.commandeARetourner = new Commande();
+		dejaTire = false;
 	}
 
 	/**
@@ -38,6 +41,11 @@ public class Controleur implements KeyListener {
 	public Commande getCommande() {
 		Commande aRetourner = this.commandeARetourner;
 		this.commandeARetourner = new Commande(this.commandeEnCours);
+		if(dejaTire)
+			aRetourner.tir = false;
+		else if(aRetourner.tir)
+			dejaTire = true;
+			
 		return (aRetourner);
 	}
 
@@ -89,6 +97,8 @@ public class Controleur implements KeyListener {
 			break;
 		case KeyEvent.VK_SPACE:
 			this.commandeEnCours.tir = false;
+			this.commandeARetourner.tir = false;
+			dejaTire = false;
 			break;
 		}
 
