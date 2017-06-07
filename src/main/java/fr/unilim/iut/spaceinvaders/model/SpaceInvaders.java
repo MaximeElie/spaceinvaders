@@ -2,6 +2,7 @@ package fr.unilim.iut.spaceinvaders.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fr.unilim.iut.spaceinvaders.moteurjeu.Commande;
 import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
@@ -15,9 +16,11 @@ public class SpaceInvaders implements Jeu {
 	private int hauteur;
 	private Vaisseau vaisseau;
 	private List<Missile> missiles;
+	private List<Missile> missilesEnvahisseurs;
 	private List<Envahisseur> envahisseurs;
 	private boolean finPartie;
 	private int score;
+	Random rand;
 
 	public boolean isFinPartie() {
 		return finPartie;
@@ -28,7 +31,9 @@ public class SpaceInvaders implements Jeu {
 		this.hauteur = hauteur;
 		this.missiles = new ArrayList<Missile>();
 		this.envahisseurs = new ArrayList<Envahisseur>();
+		this.missilesEnvahisseurs = new ArrayList<Missile>();
 		this.score = 0;
+		rand = new Random();
 	}
 
 	public void initialiserJeu() {
@@ -98,6 +103,11 @@ public class SpaceInvaders implements Jeu {
 				return true;
 		}
 		
+		for(Missile missile : missilesEnvahisseurs) {
+			if(missile.occupeLaPosition(x, y))
+				return true;
+		}
+		
 		return false;
 	}
 
@@ -157,7 +167,10 @@ public class SpaceInvaders implements Jeu {
 	}
 
 	public void evoluer(Commande commandeUser) {
-
+		
+		if(finPartie)
+			return;
+		
 		if (commandeUser.gauche) {
 			deplacerVaisseauVersLaGauche();
 		}
@@ -165,15 +178,55 @@ public class SpaceInvaders implements Jeu {
 		if (commandeUser.droite) {
 			deplacerVaisseauVersLaDroite();
 		}
-
-		if (commandeUser.tir) {
-			tirerUnMissile(new Dimension(Constante.MISSILE_LONGUEUR, Constante.MISSILE_HAUTEUR),
-					Constante.MISSILE_VITESSE);
-		}
 		
 		deplacerEnvahisseurs();
 		
 		deplacerMissiles();
+		deplacerMissilesEnvahisseurs();
+		
+		if(rand.nextFloat() < Constante.ENVAHISSEUR_PROBABILITE_TIR) {
+			tirerMissileEnvahisseur(new Dimension(Constante.MISSILE_LONGUEUR, Constante.MISSILE_HAUTEUR), Constante.MISSILE_VITESSE);
+		}
+		
+		if (commandeUser.tir) {
+			tirerUnMissile(new Dimension(Constante.MISSILE_LONGUEUR, Constante.MISSILE_HAUTEUR),
+					Constante.MISSILE_VITESSE);
+		}
+	}
+
+	public void tirerMissileEnvahisseur(Dimension dimensionMissile, int vitesseMissile) {
+		
+		int indexAleatoire = rand.nextInt(envahisseurs.size());
+		
+		Envahisseur envahisseur = envahisseurs.get(indexAleatoire);
+		
+		if ((envahisseur.hauteur() + dimensionMissile.hauteur()) > this.hauteur)
+			throw new MissileException(
+					"Pas assez de hauteur libre entre l'envahisseur et le bas de l'espace jeu pour tirer le missile");
+		
+		Missile nouveauMissile = envahisseur.tirerUnMissile(dimensionMissile, vitesseMissile);
+		
+		boolean collision = false;
+		for(Missile missile : missilesEnvahisseurs) {
+			if(Collision.detecterCollision(missile, nouveauMissile))
+				collision = true;
+		}
+		
+		if(!collision) {
+			this.missilesEnvahisseurs.add(nouveauMissile);
+		}
+	}
+
+	public void deplacerMissilesEnvahisseurs() {
+		for(int i = 0 ; i < missilesEnvahisseurs.size() ; i++) {
+			missilesEnvahisseurs.get(i).deplacerVerticalement();
+			
+			if(Collision.detecterCollision(vaisseau, missilesEnvahisseurs.get(i)))
+				finPartie();
+			
+			if(!estDansEspaceJeu(missilesEnvahisseurs.get(i).abscisseLaPlusAGauche(), missilesEnvahisseurs.get(i).ordonneeLaPlusHaute()))
+				missilesEnvahisseurs.remove(i);
+		}		
 	}
 
 	private void finPartie() {
@@ -209,7 +262,7 @@ public class SpaceInvaders implements Jeu {
 	public void deplacerMissiles() {
 		
 		for(int i = 0 ; i < missiles.size() ; i++) {
-			missiles.get(i).deplacerVerticalementVers(Direction.HAUT_ECRAN);
+			missiles.get(i).deplacerVerticalement();
 			
 			for(int j = 0 ; j < envahisseurs.size() ; j++) {
 				if(Collision.detecterCollision(envahisseurs.get(j), missiles.get(i))) {
@@ -279,6 +332,10 @@ public class SpaceInvaders implements Jeu {
 
 	public int getScore() {
 		return score;
+	}
+
+	public List<Missile> recupererMissilesEnvahisseurs() {
+		return missilesEnvahisseurs;
 	}
 
 }

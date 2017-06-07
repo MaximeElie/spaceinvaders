@@ -18,6 +18,7 @@ public class Constante {
 	   public static final int ENVAHISSEUR_LONGUEUR = 60;
 	   public static final int ENVAHISSEUR_HAUTEUR = 60;
 	   public static final int ENVAHISSEUR_VITESSE = 10;
+	   public static final float ENVAHISSEUR_PROBABILITE_TIR = 0.05f;
 	
 	   public static final char MARQUE_FIN_LIGNE = '\n';
 	   public static final char MARQUE_VIDE = '.';

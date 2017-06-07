@@ -471,4 +471,57 @@ public class SpaceInvadersTest {
     	if(spaceinvaders.getScore() != 1)
     		fail("Le score devrait être égale a 1 si on détruit un envahisseur");
     }
+    
+    @Test
+    public void test_EnvahisseurPeutTirerMissile() {
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2);
+    	
+    	assertEquals("" + 
+    			"EEE............\n" + 
+    			"EEE............\n" +
+    			".M.............\n" + 
+    			".M.............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"VVV............\n" + 
+    			"VVV............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    }
+    
+    @Test
+    public void test_MissileEnvahisseurSeDeplaceVersLeBas() {
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2);
+    	
+    	spaceinvaders.deplacerMissilesEnvahisseurs();
+    	
+    	assertEquals("" + 
+    			"EEE............\n" + 
+    			"EEE............\n" +
+    			"...............\n" + 
+    			"...............\n" + 
+    			".M.............\n" + 
+    			".M.............\n" + 
+    			"...............\n" + 
+    			"...............\n" + 
+    			"VVV............\n" + 
+    			"VVV............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+    }
+    
+    @Test
+    public void test_siMissileEnvahisseurToucheVaisseau_finPartie() {
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 3);
+    	
+    	spaceinvaders.deplacerMissilesEnvahisseurs();
+    	spaceinvaders.deplacerMissilesEnvahisseurs();
+    	
+    	if(!spaceinvaders.isFinPartie())
+    		fail("La partie devrait se finir lorsque le vaisseau est touche");
+    }
 }
