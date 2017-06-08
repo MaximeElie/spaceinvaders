@@ -13,12 +13,12 @@ public class Constante {
 	   
 	   public static final int MISSILE_LONGUEUR = 5;
 	   public static final int MISSILE_HAUTEUR = 20;
-	   public static final int MISSILE_VITESSE = 10;
+	   public static final int MISSILE_VITESSE = 5;
 	   
 	   public static final int ENVAHISSEUR_LONGUEUR = 30;
 	   public static final int ENVAHISSEUR_HAUTEUR = 30;
-	   public static final int ENVAHISSEUR_VITESSE = 3;
-	   public static final float ENVAHISSEUR_PROBABILITE_TIR = 0.02f;
+	   public static final int ENVAHISSEUR_VITESSE = 1;
+	   public static final float ENVAHISSEUR_PROBABILITE_TIR = 0.01f;
 	
 	   public static final char MARQUE_FIN_LIGNE = '\n';
 	   public static final char MARQUE_VIDE = '.';

@@ -302,7 +302,7 @@ public class SpaceInvadersTest {
     
     @Test
     public void test_EnvahisseurCorrectementPositionne() {
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 2);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 2, 0);
     	
     	assertEquals("" + 
 		".......EEE.....\n" + 
@@ -320,7 +320,7 @@ public class SpaceInvadersTest {
     @Test
     public void test_EnvahisseurSeDeplaceVersLaDroiteParDefault() {
     	
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 2);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(7,2), 2, 0);
     	
     	spaceinvaders.deplacerEnvahisseurs();
     	
@@ -339,7 +339,7 @@ public class SpaceInvadersTest {
     
     @Test
     public void test_EnvahisseurChangeDeDirectionAuBordDeEspaceDeJeu() {
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(11,2), 2);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 3), new Position(11,2), 2, 0);
     	
     	spaceinvaders.deplacerEnvahisseurs();
     	spaceinvaders.deplacerEnvahisseurs();
@@ -422,7 +422,7 @@ public class SpaceInvadersTest {
     @Test
     public void test_LaLigneEnvahisseursSeDeplaceCorrectement() {
     	for(int i = 0 ; i < 3 ; i++) {
-    		spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(i*4,1), 2);
+    		spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(i*4,1), 2, i);
     	}
     	
     	spaceinvaders.deplacerEnvahisseurs();
@@ -460,7 +460,7 @@ public class SpaceInvadersTest {
     @Test
     public void test_DetruireUnEnvahisseurAugmenteLeScore() {
     	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0, 0);
     	
     	spaceinvaders.tirerUnMissile(new Dimension(1, 2), 2);
     	
@@ -474,9 +474,9 @@ public class SpaceInvadersTest {
     
     @Test
     public void test_EnvahisseurPeutTirerMissile() {
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0, 0);
     	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
-    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2, 0);
     	
     	assertEquals("" + 
     			"EEE............\n" + 
@@ -493,9 +493,9 @@ public class SpaceInvadersTest {
     
     @Test
     public void test_MissileEnvahisseurSeDeplaceVersLeBas() {
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0, 0);
     	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
-    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 2, 0);
     	
     	spaceinvaders.deplacerMissilesEnvahisseurs();
     	
@@ -514,9 +514,9 @@ public class SpaceInvadersTest {
     
     @Test
     public void test_siMissileEnvahisseurToucheVaisseau_finPartie() {
-    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0);
+    	spaceinvaders.positionnerUnNouvelEnvahisseur(new Dimension(3, 2), new Position(0, 1), 0, 0);
     	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3, 2), new Position(0, 9), 1);
-    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 3);
+    	spaceinvaders.tirerMissileEnvahisseur(new Dimension(1, 2), 3, 0);
     	
     	spaceinvaders.deplacerMissilesEnvahisseurs();
     	spaceinvaders.deplacerMissilesEnvahisseurs();

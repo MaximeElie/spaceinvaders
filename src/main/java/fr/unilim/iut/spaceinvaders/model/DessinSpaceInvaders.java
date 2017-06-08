@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import java.util.List;
+
 import fr.unilim.iut.spaceinvaders.moteurjeu.DessinJeu;
 
 public class DessinSpaceInvaders implements DessinJeu {
@@ -16,6 +18,9 @@ public class DessinSpaceInvaders implements DessinJeu {
 	}
 
 	public void dessiner(BufferedImage im) {
+		
+		dessinBackground(im);
+		
 		if(jeu.isFinPartie()) {
 			this.dessinerMessageFinPartie(im);
 			this.dessinerScore(im);
@@ -31,8 +36,10 @@ public class DessinSpaceInvaders implements DessinJeu {
 			this.dessinerUnMissile(missile, im);
 		}
 		
-		for(Envahisseur envahisseur : jeu.recupererEnvahisseurs()) {
-			this.dessinerUnEnvahisseur(envahisseur, im);
+		for(List<Envahisseur> envs : jeu.recupererEnvahisseurs()) {
+			for(Envahisseur env : envs) {
+				this.dessinerUnEnvahisseur(env, im);
+			}
 		}
 		
 		for(Missile missile : jeu.recupererMissilesEnvahisseurs()) {
@@ -40,6 +47,13 @@ public class DessinSpaceInvaders implements DessinJeu {
 		}
 		
 		this.dessinerScore(im);
+	}
+
+	private void dessinBackground(BufferedImage im) {
+		Graphics2D crayon = (Graphics2D) im.getGraphics();
+
+		crayon.setColor(Color.black);
+		crayon.fillRect(0, 0, Constante.ESPACEJEU_LONGUEUR + Constante.ZONESCORE_LONGUEUR, Constante.ESPACEJEU_HAUTEUR);			
 	}
 
 	private void dessinerUnMissileEnvahisseur(Missile missile, BufferedImage im) {
@@ -54,7 +68,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 	private void dessinerScore(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
-		crayon.setColor(Color.black);
+		crayon.setColor(Color.white);
 		crayon.setFont(new Font("Verdana", Font.BOLD, 30));
 		crayon.drawString("Score : " + jeu.getScore(), Constante.ESPACEJEU_LONGUEUR, Constante.ESPACEJEU_HAUTEUR/2);		
 	}
@@ -62,7 +76,7 @@ public class DessinSpaceInvaders implements DessinJeu {
 	private void dessinerMessageFinPartie(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
-		crayon.setColor(Color.black);
+		crayon.setColor(Color.white);
 		crayon.setFont(new Font("Verdana", Font.BOLD, 50));
 		crayon.drawString("FIN DE LA PARTIE", 50, Constante.ESPACEJEU_HAUTEUR/2);
 	}
